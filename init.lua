@@ -1,13 +1,54 @@
+minetest.clear_registered_biomes()
+
 -- Get setting or default
 local mgv7_spflags = minetest.get_mapgen_setting("mgv7_spflags") or "mountains, ridges, floatlands, caverns"
 local captures_float = string.match(mgv7_spflags, "floatlands")
 local captures_nofloat = string.match(mgv7_spflags, "nofloatlands")
 
+local n1 = {
+	offset      = -0.6,
+	scale       = 1.5,
+	spread      = {x = 600, y = 600, z= 600},
+	seed        = 114,
+	octaves     = 5,
+	persistence = 0.6,
+	lacunarity  = 2.0,
+	flags       = "eased"
+}
+
+local n2 = {
+	offset      = 48,
+	scale       = 24,
+	spread      = {x = 300, y = 300, z = 300},
+	seed        = 907,
+	octaves     = 4,
+	persistence = 0.7,
+	lacunarity  = 2.0,
+	flags       = "eased"
+}
+
+local n3 = {
+	offset      = -0.6,
+	scale       = 1,
+	spread      = {x = 250, y = 350, z = 250},
+	seed        = 5333,
+	octaves     = 5,
+	persistence = 0.63,
+	lacunarity  = 2.0,
+	flags       = ""
+}
+
+local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base") or n1
+local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
+local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
+local floatland_y = minetest.get_mapgen_setting("mgv7_floatland_level") or 1280
+local mount_height = minetest.get_mapgen_setting("mgv7_float_mount_height") or 128
+local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.6
+
 -- Make global for mods to use to register floatland biomes
 default.mgv7_floatland_level = floatland_y
 default.mgv7_shadow_limit = minetest.get_mapgen_setting("mgv7_shadow_limit") or 1024
 
-minetest.clear_registered_biomes()
 default.register_biomes(default.mgv7_shadow_limit - 1)
 
 minetest.register_node("floatland_realm:grass", {
@@ -176,46 +217,6 @@ local function build_portal(pos)
 	end
 	end
 end
-
-local n1 = {
-	offset      = -0.6,
-	scale       = 1.5,
-	spread      = {x = 600, y = 600, z= 600},
-	seed        = 114,
-	octaves     = 5,
-	persistence = 0.6,
-	lacunarity  = 2.0,
-	flags       = "eased"
-}
-
-local n2 = {
-	offset      = 48,
-	scale       = 24,
-	spread      = {x = 300, y = 300, z = 300},
-	seed        = 907,
-	octaves     = 4,
-	persistence = 0.7,
-	lacunarity  = 2.0,
-	flags       = "eased"
-}
-
-local n3 = {
-	offset      = -0.6,
-	scale       = 1,
-	spread      = {x = 250, y = 350, z = 250},
-	seed        = 5333,
-	octaves     = 5,
-	persistence = 0.63,
-	lacunarity  = 2.0,
-	flags       = ""
-}
-
-local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base") or n1
-local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
-local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
-local floatland_y = minetest.get_mapgen_setting("mgv7_floatland_level") or 1280
-local mount_height = minetest.get_mapgen_setting("mgv7_float_mount_height") or 128
-local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.6
 
 local function spawn_point()
 	local noise_base = minetest.get_perlin(noise_b)
