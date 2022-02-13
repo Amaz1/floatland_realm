@@ -16,7 +16,7 @@ minetest.register_node("floatland_realm:grass", {
 		{name = "floatland_realm_dirt.png^floatland_realm_grass_side.png",
 			tileable_vertical = false}},
 	groups = {fcrumbly = 3, soil = 1, spreading_dirt_type = 1},
-	drop = 'default:dirt',
+	drop = 'floatland_realm:dirt',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_grass_footstep", gain = 0.25},
 	}),
@@ -25,6 +25,7 @@ minetest.register_node("floatland_realm:grass", {
 minetest.register_node("floatland_realm:sand", {
 	description = "Float Sand",
 	tiles = {"floatland_realm_sand.png"},
+	drop = 'floatland_realm:sand',
 	groups = {fcrumbly = 3, falling_node = 1, sand = 1},
 	sounds = default.node_sound_sand_defaults(),
 })
@@ -32,6 +33,7 @@ minetest.register_node("floatland_realm:sand", {
 minetest.register_node("floatland_realm:dirt", {
 	description = "Float Dirt",
 	tiles = {"floatland_realm_dirt.png"},
+	drop = 'floatland_realm:dirt',
 	groups = {fcrumbly = 3, soil = 1},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -40,7 +42,7 @@ minetest.register_node("floatland_realm:stone", {
 	description = "Float Stone",
 	tiles = {"floatland_realm_stone.png"},
 	groups = {fcracky = 3, stone = 1},
-	drop = 'default:cobble',
+	drop = 'floatland_realm:dirt',
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
