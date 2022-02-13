@@ -1,3 +1,12 @@
+-- Get setting or default
+local mgv7_spflags = minetest.get_mapgen_setting("mgv7_spflags") or "mountains, ridges, floatlands, caverns"
+local captures_float = string.match(mgv7_spflags, "floatlands")
+local captures_nofloat = string.match(mgv7_spflags, "nofloatlands")
+
+-- Make global for mods to use to register floatland biomes
+default.mgv7_floatland_level = floatland_y
+default.mgv7_shadow_limit = minetest.get_mapgen_setting("mgv7_shadow_limit") or 1024
+
 minetest.clear_registered_biomes()
 default.register_biomes(default.mgv7_shadow_limit - 1)
 
@@ -198,6 +207,7 @@ local n3 = {
 	lacunarity  = 2.0,
 	flags       = ""
 }
+
 local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base") or n1
 local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
 local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
@@ -210,7 +220,7 @@ local function spawn_point()
 	local noise_height = minetest.get_perlin(noise_h)
 	local noise_mount = minetest.get_perlin(noise_m)
 	local base_max = floatland_y
-	local y = 1283
+	local y = floatland_y + 3
 	for i = 1, 10000 do
 	    local x = math.random(-2000, 2000)
 	    local z = math.random(-2000, 2000)
@@ -225,7 +235,7 @@ local function spawn_point()
 			if amp < ridge * 2 then
 				local diff = math.abs(amp - ridge) / ridge
 				local smooth_diff = diff * diff * (3 - 2 * diff)
-				base_max = 1280 + ridge - smooth_diff * ridge
+				base_max = floatland_y + ridge - smooth_diff * ridge
 			end
 			return {x = x, y = base_max + 2, z = z}
 		end
