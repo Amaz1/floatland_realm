@@ -42,6 +42,7 @@ local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base"
 local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
 local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
 local floatland_y = minetest.get_mapgen_setting("mgv7_floatland_level") or 1280
+local worldlimit = minetest.get_mapgen_setting("mapgen_limit") or 31000
 local mount_height = minetest.get_mapgen_setting("mgv7_float_mount_height") or 128
 local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.6
 
@@ -342,7 +343,7 @@ minetest.register_biome({
 	depth_filler = 2,
 	node_stone = "floatland_realm:stone",
 	y_min = floatland_y + 2,
-	y_max = 31000,
+	y_max = worldlimit,
 	heat_point = 50,
 	humidity_point = 50,
 })
