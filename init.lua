@@ -1,6 +1,7 @@
 minetest.clear_registered_biomes()
 
 -- Get setting or default
+local mgv = minetest.get_mapgen_setting("mg_name") or nil
 local mgv7_spflags = minetest.get_mapgen_setting("mgv7_spflags") or "mountains, ridges, floatlands, caverns"
 local captures_float = string.match(mgv7_spflags, "floatlands")
 local captures_nofloat = string.match(mgv7_spflags, "nofloatlands")
@@ -49,6 +50,8 @@ local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.
 -- Make global for mods to use to register floatland biomes
 default.mgv7_floatland_level = floatland_y
 default.mgv7_shadow_limit = minetest.get_mapgen_setting("mgv7_shadow_limit") or 1024
+
+if mgv == "v7" then 
 
 default.register_biomes(default.mgv7_shadow_limit - 1)
 
@@ -359,3 +362,4 @@ minetest.register_biome({
 	humidity_point = 50,
 })
 
+end
