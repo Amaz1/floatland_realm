@@ -1,4 +1,58 @@
 minetest.clear_registered_biomes()
+
+-- Get setting or default
+local mgv = minetest.get_mapgen_setting("mg_name") or nil
+local mgv7_spflags = minetest.get_mapgen_setting("mgv7_spflags") or "mountains, ridges, floatlands, caverns"
+local captures_float = string.match(mgv7_spflags, "floatlands")
+local captures_nofloat = string.match(mgv7_spflags, "nofloatlands")
+
+local n1 = {
+	offset      = -0.6,
+	scale       = 1.5,
+	spread      = {x = 600, y = 600, z= 600},
+	seed        = 114,
+	octaves     = 5,
+	persistence = 0.6,
+	lacunarity  = 2.0,
+	flags       = "eased"
+}
+
+local n2 = {
+	offset      = 48,
+	scale       = 24,
+	spread      = {x = 300, y = 300, z = 300},
+	seed        = 907,
+	octaves     = 4,
+	persistence = 0.7,
+	lacunarity  = 2.0,
+	flags       = "eased"
+}
+
+local n3 = {
+	offset      = -0.6,
+	scale       = 1,
+	spread      = {x = 250, y = 350, z = 250},
+	seed        = 5333,
+	octaves     = 5,
+	persistence = 0.63,
+	lacunarity  = 2.0,
+	flags       = ""
+}
+
+local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base") or n1
+local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
+local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
+local floatland_y = minetest.get_mapgen_setting("mgv7_floatland_level") or 1280
+local worldlimit = minetest.get_mapgen_setting("mapgen_limit") or 31000
+local mount_height = minetest.get_mapgen_setting("mgv7_float_mount_height") or 128
+local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.6
+
+-- Make global for mods to use to register floatland biomes
+default.mgv7_floatland_level = floatland_y
+default.mgv7_shadow_limit = minetest.get_mapgen_setting("mgv7_shadow_limit") or 1024
+
+if mgv == "v7" then 
+
 default.register_biomes(default.mgv7_shadow_limit - 1)
 
 minetest.register_node("floatland_realm:grass", {
@@ -7,7 +61,7 @@ minetest.register_node("floatland_realm:grass", {
 		{name = "floatland_realm_dirt.png^floatland_realm_grass_side.png",
 			tileable_vertical = false}},
 	groups = {fcrumbly = 3, soil = 1, spreading_dirt_type = 1},
-	drop = 'default:dirt',
+	drop = 'floatland_realm:dirt',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_grass_footstep", gain = 0.25},
 	}),
@@ -16,6 +70,7 @@ minetest.register_node("floatland_realm:grass", {
 minetest.register_node("floatland_realm:sand", {
 	description = "Float Sand",
 	tiles = {"floatland_realm_sand.png"},
+	drop = 'floatland_realm:sand',
 	groups = {fcrumbly = 3, falling_node = 1, sand = 1},
 	sounds = default.node_sound_sand_defaults(),
 })
@@ -23,6 +78,7 @@ minetest.register_node("floatland_realm:sand", {
 minetest.register_node("floatland_realm:dirt", {
 	description = "Float Dirt",
 	tiles = {"floatland_realm_dirt.png"},
+	drop = 'floatland_realm:dirt',
 	groups = {fcrumbly = 3, soil = 1},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -31,7 +87,7 @@ minetest.register_node("floatland_realm:stone", {
 	description = "Float Stone",
 	tiles = {"floatland_realm_stone.png"},
 	groups = {fcracky = 3, stone = 1},
-	drop = 'default:cobble',
+	drop = 'floatland_realm:dirt',
 	legacy_mineral = true,
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -166,51 +222,12 @@ local function build_portal(pos)
 	end
 end
 
-local n1 = {
-	offset      = -0.6,
-	scale       = 1.5,
-	spread      = {x = 600, y = 600, z= 600},
-	seed        = 114,
-	octaves     = 5,
-	persistence = 0.6,
-	lacunarity  = 2.0,
-	flags       = "eased"
-}
-
-local n2 = {
-	offset      = 48,
-	scale       = 24,
-	spread      = {x = 300, y = 300, z = 300},
-	seed        = 907,
-	octaves     = 4,
-	persistence = 0.7,
-	lacunarity  = 2.0,
-	flags       = "eased"
-}
-
-local n3 = {
-	offset      = -0.6,
-	scale       = 1,
-	spread      = {x = 250, y = 350, z = 250},
-	seed        = 5333,
-	octaves     = 5,
-	persistence = 0.63,
-	lacunarity  = 2.0,
-	flags       = ""
-}
-local noise_b = minetest.get_mapgen_setting_noiseparams("mgv7_np_floatland_base") or n1
-local noise_h = minetest.get_mapgen_setting_noiseparams("mgv7_np_float_base_height") or n2
-local noise_m = minetest.get_mapgen_setting_noiseparams("mgv7_np_mountain") or n3
-local floatland_y = minetest.get_mapgen_setting("mgv7_floatland_level") or 1280
-local mount_height = minetest.get_mapgen_setting("mgv7_float_mount_height") or 128
-local mount_dens = minetest.get_mapgen_setting("mgv7_float_mount_density") or 0.6
-
 local function spawn_point()
 	local noise_base = minetest.get_perlin(noise_b)
 	local noise_height = minetest.get_perlin(noise_h)
 	local noise_mount = minetest.get_perlin(noise_m)
 	local base_max = floatland_y
-	local y = 1283
+	local y = floatland_y + 3
 	for i = 1, 10000 do
 	    local x = math.random(-2000, 2000)
 	    local z = math.random(-2000, 2000)
@@ -225,7 +242,7 @@ local function spawn_point()
 			if amp < ridge * 2 then
 				local diff = math.abs(amp - ridge) / ridge
 				local smooth_diff = diff * diff * (3 - 2 * diff)
-				base_max = 1280 + ridge - smooth_diff * ridge
+				base_max = floatland_y + ridge - smooth_diff * ridge
 			end
 			return {x = x, y = base_max + 2, z = z}
 		end
@@ -329,7 +346,7 @@ minetest.register_biome({
 	depth_filler = 2,
 	node_stone = "floatland_realm:stone",
 	y_min = floatland_y + 2,
-	y_max = 31000,
+	y_max = worldlimit,
 	heat_point = 50,
 	humidity_point = 50,
 })
@@ -345,3 +362,4 @@ minetest.register_biome({
 	humidity_point = 50,
 })
 
+end
