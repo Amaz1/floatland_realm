@@ -1,4 +1,4 @@
-minetest.clear_registered_biomes()
+--minetest.clear_registered_biomes()
 
 -- Get setting or default
 local mgv = minetest.get_mapgen_setting("mg_name") or nil
@@ -52,8 +52,6 @@ default.mgv7_floatland_level = floatland_y
 default.mgv7_shadow_limit = minetest.get_mapgen_setting("mgv7_shadow_limit") or 1024
 
 if mgv == "v7" then 
-
-default.register_biomes(default.mgv7_shadow_limit - 1)
 
 minetest.register_node("floatland_realm:grass", {
 	description = "Float Grass",
