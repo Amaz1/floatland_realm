@@ -1,5 +1,12 @@
 --minetest.clear_registered_biomes()
 
+local needprivs = minetest.get_modpath("sethome") or nil
+if needprivs then 
+	spawnprivs = { interact = true, server = true, home = true }
+else
+	spawnprivs = { interact = true, server = true }
+end
+
 -- Get setting or default
 local mgv = minetest.get_mapgen_setting("mg_name") or nil
 local mgv7_spflags = minetest.get_mapgen_setting("mgv7_spflags") or "mountains, ridges, floatlands, caverns"
@@ -329,6 +336,9 @@ minetest.override_item("default:diamond", {
 })
 
 minetest.register_chatcommand("portal", {
+	params = "<player>",
+	description = "Admin command to build floadland blocks spawn point at player place"),
+	privs = spawnprivs,
 	func = function(name)
 		local player = minetest.get_player_by_name(name)
 		local pos = player:get_pos()

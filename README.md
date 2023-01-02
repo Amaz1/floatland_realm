@@ -29,6 +29,11 @@ original mods were so crude and just overrides all the biome generation.. this m
 do not redefine the spawn point, for that you can managed after server start and 
 world was generated.
 
+Seems in original mod is set per player, the developer are a LOTT/LOTR 
+subgame developer so the function were made per player respawns. So due that 
+the spawn point generation is only at command invokation for now.
+
+
 #### Status
 
 Currently only some nodes are defined, still pending to define digging of tools.
@@ -60,7 +65,9 @@ A simplistic implementation but more customized is at the subnasa sub game of mi
 
 #### Chat commands
 
-* `portal` will build the floatland like spawn place, at the current player position
+* `portal <playername>` will build the floatland like spawn place, at the current player position
+
+This command needs server and home privilegies (if sethome is available) and interact.
 
 # License
 
