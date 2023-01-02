@@ -1,29 +1,31 @@
-minetest mod floatland_realm
+minetest mod floatland
 ============================
 
-Produce hard biome at the floatlands, you will need a diamond shovel.
+Simple mod to added rare greenbiomes to floadlands event only snown
 
 Information
 -----------
 
 This mod is named `floatland_realm`, it produces a large floadlands, 
-an with possible new spawn place (if you configured `floatland_spawn`), 
-so a diamond shovel will be need.
+but the biome is more nice event simple snown when others mods like ethereal 
+are present. Possible to set new spawn place (if you configured `floatland_spawn` 
+older mod, but deprecated), so a diamond shovel will be need there.
 
-![screenshot.png](screenshot.png)
 
 Technical info
 --------------
 
-This is a fork for minenux project, from original work that fixed minor problems, 
-cos original author do not respond to issues, it work with minetest 0.4.X and minetest4.
+This is a fork for minenux project, from original work of floadlands_realm 
+its just to provide nice biomes when other mods like ethereal only produces snown.
 
-It make the floatlands of mgv7 interesting, by the adition of new hard blocks, 
 it uses the setting from minetest config files of mapgen v7, specially the `mgv7_floatland_level` 
-and try to redefined the floatland layer of biome fully, it put 4 new nodes 
-and try to made all the floadland a complete continuos layer in sky.
+and try to redefined the floatland layer of biome fully.
 
-Currently the portal is not working as spected. This mod is just a fix version of original one.
+#### Status
+
+Currently only some nodes are defined, still pending to define digging of tools.
+
+A better implementation but more customized is at the subnasa sub game of minenux project.
 
 #### Depends
 
@@ -48,12 +50,11 @@ Currently the portal is not working as spected. This mod is just a fix version o
 | Floatland Beach | floatland_beach | floatland_realm:grass, floatland_realm:dirt, floatland_realm:stone |
 | Floatland grass | floatland_grass | floatland_realm:sand, floatland_realm:stone |
 
-
 # License
 
-LGPL 2.1 check [license.txt](license.txt)
+CC BY SA 3 mckayshirou
 
-Code by Amaz an archived work of it are at https://github.com/Amaz1/floatland_realm
+Based in Amaz an archived work of it are at https://github.com/Amaz1/floatland_realm
 
 The noise code is based on the floatlands C++ noise code. 
 See https://github.com/minetest/minetest/blob/28841961ba91b943b7478704181604fa3e24e81e/src/mapgen_v7.cpp#L415
