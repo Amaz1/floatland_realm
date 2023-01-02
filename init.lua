@@ -370,4 +370,15 @@ minetest.register_biome({
 	humidity_point = 50,
 })
 
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = {"floatland_realm:grass"},
+	sidelen = 16,
+	fill_ratio = 0.8,
+	biomes = {"floatland_grass"},
+	y_min = floatland_y + 7,
+	y_max = worldlimit,
+	decoration = "default:bush_sapling",
+})
+
 end
