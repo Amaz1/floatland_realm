@@ -8,9 +8,12 @@ Information
 
 This mod is named `floatland_realm`, it produces a large floadlands, 
 but the biome is more nice event simple snown when others mods like ethereal 
-are present. Possible to set new spawn place (if you configured `floatland_spawn` 
-older mod, but deprecated), so a diamond shovel will be need there.
+are present. It provide a command chat to defined an area called `floatland_spawn` 
+it redfined the older mod spawm point area of the same name, (but deprecated)
 
+This mod put rare blocks in high lands so a diamond shovel will be need there.
+
+![screenshot.png](screenshot.png)
 
 Technical info
 --------------
@@ -21,11 +24,16 @@ its just to provide nice biomes when other mods like ethereal only produces snow
 it uses the setting from minetest config files of mapgen v7, specially the `mgv7_floatland_level` 
 and try to redefined the floatland layer of biome fully.
 
+The spawn point if the merge of the `floatland_spawn` mod code, with some checks, 
+original mods were so crude and just overrides all the biome generation.. this mod 
+do not redefine the spawn point, for that you can managed after server start and 
+world was generated.
+
 #### Status
 
 Currently only some nodes are defined, still pending to define digging of tools.
 
-A better implementation but more customized is at the subnasa sub game of minenux project.
+A simplistic implementation but more customized is at the subnasa sub game of minenux project.
 
 #### Depends
 
@@ -49,6 +57,10 @@ A better implementation but more customized is at the subnasa sub game of minenu
 | --------------- | ---------------- | ---------------------------------------------- |
 | Floatland Beach | floatland_beach | floatland_realm:grass, floatland_realm:dirt, floatland_realm:stone |
 | Floatland grass | floatland_grass | floatland_realm:sand, floatland_realm:stone |
+
+#### Chat commands
+
+* `portal` will build the floatland like spawn place, at the current player position
 
 # License
 
